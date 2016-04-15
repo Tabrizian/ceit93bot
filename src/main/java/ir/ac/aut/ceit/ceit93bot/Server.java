@@ -41,9 +41,8 @@ public class Server {
 						while ((output = br.readLine()) != null) {
 							System.out.println(output);
 						}
-
-						httpClient.getConnectionManager().shutdown();
-
+						
+						
 					} catch (ClientProtocolException e) {
 
 						e.printStackTrace();
@@ -59,5 +58,9 @@ public class Server {
 
 	public void start() {
 		listeningThread.start();
+	}
+	
+	public void stop() {
+		listeningThread.;
 	}
 }
