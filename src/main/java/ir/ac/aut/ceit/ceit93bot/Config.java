@@ -1,8 +1,11 @@
 package ir.ac.aut.ceit.ceit93bot;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Config {
 	public String hashId;
@@ -10,12 +13,17 @@ public class Config {
 	public static Config instance;
 
 	private Config() {
-		BufferedReader br = new BufferedReader(
-				new InputStreamReader(getClass().getResourceAsStream("/user.conf")));
+		JSONParser parser = new JSONParser();
+		 
+		InputStreamReader inputStreamReader = new InputStreamReader(getClass().getResourceAsStream("/user.conf"));
 
 		try {
-			hashId = br.readLine();
+			
+			hashId = (String) ((JSONObject) parser.parse(inputStreamReader)).get("hashId");
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
