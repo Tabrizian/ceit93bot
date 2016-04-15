@@ -15,7 +15,7 @@ import org.json.simple.parser.ParseException;
 public class Handler implements Runnable {
 
 	private HttpClient httpClient;
-	private JSONArray updates;
+	private JSONArray updates = new JSONArray();
 	private JSONParser parser = new JSONParser();
 
 	public Handler(HttpClient httpClient) {
@@ -37,8 +37,14 @@ public class Handler implements Runnable {
 				}
 
 				try {
-					if (response.getEntity().getContent() != null)
-						setUpdates((JSONArray) parser.parse(new InputStreamReader(response.getEntity().getContent())));
+
+					Object result = parser.parse(new InputStreamReader(response.getEntity().getContent()));
+					if (result != null){
+						JSONArray array = (JSONArray)((JSONObject) result).get("result");
+						if(array.size() != 0 && array != null)
+							setUpdates(array);
+					}
+
 				} catch (IllegalStateException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -59,11 +65,19 @@ public class Handler implements Runnable {
 	}
 
 	public JSONArray getUpdates() {
+		while(updates == null){
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return updates;
 	}
 
 	public void setUpdates(JSONArray updates) {
-		this.updates = updates;
+		this.updates.add(updates);
 	}
 
 }
