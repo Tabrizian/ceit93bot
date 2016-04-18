@@ -14,70 +14,70 @@ import org.json.simple.parser.ParseException;
 
 public class Handler implements Runnable {
 
-	private HttpClient httpClient;
-	private JSONArray updates = new JSONArray();
-	private JSONParser parser = new JSONParser();
+    private HttpClient httpClient;
+    private JSONArray updates = new JSONArray();
+    private JSONParser parser = new JSONParser();
 
-	public Handler(HttpClient httpClient) {
-		this.httpClient = httpClient;
-	}
+    public Handler(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
 
-	public void run() {
-		while (true) {
-			try {
-				HttpGet getRequest = new HttpGet(
-						"http://api.telegram.org/bot" + Config.getInstance().getHashId() + "/getUpdates");
-				getRequest.addHeader("accept", "application/json");
+    public void run() {
+        while (true) {
+            try {
+                HttpGet getRequest = new HttpGet(
+                        "http://api.telegram.org/bot" + Config.getInstance().getHashId() + "/getUpdates");
+                getRequest.addHeader("accept", "application/json");
 
-				HttpResponse response = httpClient.execute(getRequest);
+                HttpResponse response = httpClient.execute(getRequest);
 
-				if (response.getStatusLine().getStatusCode() != 200) {
-					throw new RuntimeException(
-							"Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
-				}
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    throw new RuntimeException(
+                            "Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
+                }
 
-				try {
+                try {
 
-					Object result = parser.parse(new InputStreamReader(response.getEntity().getContent()));
-					if (result != null){
-						JSONArray array = (JSONArray)((JSONObject) result).get("result");
-						if(array.size() != 0 && array != null)
-							setUpdates(array);
-					}
+                    Object result = parser.parse(new InputStreamReader(response.getEntity().getContent()));
+                    if (result != null) {
+                        JSONArray array = (JSONArray) ((JSONObject) result).get("result");
+                        if (array.size() != 0 && array != null)
+                            setUpdates(array);
+                    }
 
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                } catch (IllegalStateException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 
-			} catch (ClientProtocolException e) {
+            } catch (ClientProtocolException e) {
 
-				e.printStackTrace();
+                e.printStackTrace();
 
-			} catch (IOException e) {
+            } catch (IOException e) {
 
-				e.printStackTrace();
-			}
-		}
-	}
+                e.printStackTrace();
+            }
+        }
+    }
 
-	public JSONArray getUpdates() {
-		while(updates == null){
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return updates;
-	}
+    public JSONArray getUpdates() {
+        while (updates == null) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return updates;
+    }
 
-	public void setUpdates(JSONArray updates) {
-		this.updates.add(updates);
-	}
+    public void setUpdates(JSONArray updates) {
+        this.updates.add(updates);
+    }
 
 }
