@@ -6,8 +6,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.DefaultedHttpParams;
+import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class CEITBot {
 
@@ -35,6 +37,12 @@ public class CEITBot {
                 throw new RuntimeException(
                         "Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
             }
+
+            InputStream inputStream = response.getEntity().getContent();
+            while (inputStream.read() > 0);
+
+            System.out.println("Success");
+            inputStream.close();
 
         } catch (IOException e) {
             e.printStackTrace();
