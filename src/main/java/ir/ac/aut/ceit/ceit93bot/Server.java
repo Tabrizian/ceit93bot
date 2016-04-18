@@ -20,4 +20,7 @@ public class Server {
 		return updateHandler.getUpdates();
 	}
 
+	public HttpClient getHttpClient() {
+		return httpClient;
+	}
 }
