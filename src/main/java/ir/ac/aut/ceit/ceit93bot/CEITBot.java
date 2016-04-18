@@ -10,6 +10,8 @@ import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class CEITBot {
 
@@ -25,9 +27,14 @@ public class CEITBot {
     }
 
     public void sendMessage(int chatId, String message) {
-        HttpGet getRequest = new HttpGet(
-                "http://api.telegram.org/bot" + Config.getInstance().getHashId()
-                        + "/sendMessage?" + "chat_id=" + chatId + "&" + "text=" + message);
+        HttpGet getRequest = null;
+        try {
+            getRequest = new HttpGet(
+                    "http://api.telegram.org/bot" + Config.getInstance().getHashId()
+                            + "/sendMessage?" + "chat_id=" + chatId + "&" + "text=" + URLEncoder.encode(message,"UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         getRequest.addHeader("accept", "application/json");
 
         try {
@@ -41,7 +48,6 @@ public class CEITBot {
             InputStream inputStream = response.getEntity().getContent();
             while (inputStream.read() > 0);
 
-            System.out.println("Success");
             inputStream.close();
 
         } catch (IOException e) {

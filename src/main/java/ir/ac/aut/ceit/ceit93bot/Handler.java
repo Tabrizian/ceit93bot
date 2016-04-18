@@ -17,6 +17,7 @@ public class Handler implements Runnable {
     private HttpClient httpClient;
     private JSONArray updates = new JSONArray();
     private JSONParser parser = new JSONParser();
+    private long offset = -1;
 
     public Handler(HttpClient httpClient) {
         this.httpClient = httpClient;
@@ -25,8 +26,9 @@ public class Handler implements Runnable {
     public void run() {
         while (true) {
             try {
+                Thread.sleep(500);
                 HttpGet getRequest = new HttpGet(
-                        "http://api.telegram.org/bot" + Config.getInstance().getHashId() + "/getUpdates");
+                        "http://api.telegram.org/bot" + Config.getInstance().getHashId() + "/getUpdates?offset=" + offset);
                 getRequest.addHeader("accept", "application/json");
 
                 HttpResponse response = httpClient.execute(getRequest);
@@ -41,8 +43,10 @@ public class Handler implements Runnable {
                     Object result = parser.parse(new InputStreamReader(response.getEntity().getContent()));
                     if (result != null) {
                         JSONArray array = (JSONArray) ((JSONObject) result).get("result");
-                        if (array.size() != 0 && array != null)
+                        if (array.size() != 0 && array != null) {
                             setUpdates(array);
+                            offset = (Long) ((JSONObject) array.get(array.size() - 1)).get("update_id") + 1;
+                        }
                     }
 
                 } catch (IllegalStateException e) {
@@ -59,6 +63,8 @@ public class Handler implements Runnable {
 
             } catch (IOException e) {
 
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -78,6 +84,10 @@ public class Handler implements Runnable {
 
     public void setUpdates(JSONArray updates) {
         this.updates.add(updates);
+    }
+
+    public void removeUpdate(Object object) {
+        updates.remove(object);
     }
 
 }

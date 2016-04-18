@@ -20,6 +20,10 @@ public class Server {
 		return updateHandler.getUpdates();
 	}
 
+	public void removeUpdate(Object object) {
+		updateHandler.removeUpdate(object);
+	}
+
 	public HttpClient getHttpClient() {
 		return httpClient;
 	}
