@@ -1,6 +1,5 @@
 package ir.ac.aut.ceit.ceit93bot;
 
-import com.sun.istack.internal.NotNull;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
