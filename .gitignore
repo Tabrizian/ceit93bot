@@ -115,3 +115,5 @@ fabric.properties
 *.iml
 
 user.conf
+
+.idea/

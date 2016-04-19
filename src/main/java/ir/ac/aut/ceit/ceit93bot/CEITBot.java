@@ -1,5 +1,6 @@
 package ir.ac.aut.ceit.ceit93bot;
 
+import com.sun.istack.internal.NotNull;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -27,31 +28,33 @@ public class CEITBot {
     }
 
     public void sendMessage(int chatId, String message) {
-        HttpGet getRequest = null;
-        try {
-            getRequest = new HttpGet(
-                    "http://api.telegram.org/bot" + Config.getInstance().getHashId()
-                            + "/sendMessage?" + "chat_id=" + chatId + "&" + "text=" + URLEncoder.encode(message,"UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        getRequest.addHeader("accept", "application/json");
-
-        try {
-            HttpResponse response = httpClient.execute(getRequest);
-
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new RuntimeException(
-                        "Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
+        if (message != null) {
+            HttpGet getRequest = null;
+            try {
+                getRequest = new HttpGet(
+                        "http://api.telegram.org/bot" + Config.getInstance().getHashId()
+                                + "/sendMessage?" + "chat_id=" + chatId + "&" + "text=" + URLEncoder.encode(message, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
+            getRequest.addHeader("accept", "application/json");
 
-            InputStream inputStream = response.getEntity().getContent();
-            while (inputStream.read() > 0);
+            try {
+                HttpResponse response = httpClient.execute(getRequest);
 
-            inputStream.close();
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    throw new RuntimeException(
+                            "Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
+                }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+                InputStream inputStream = response.getEntity().getContent();
+                while (inputStream.read() > 0) ;
+
+                inputStream.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
