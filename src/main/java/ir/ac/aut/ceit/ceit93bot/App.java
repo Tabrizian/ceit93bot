@@ -14,8 +14,24 @@ public class App {
             try {
 
                 while (server.getUpdates().size() > 0) {
-                    JSONObject message = (JSONObject) ((JSONArray) server.getUpdates().get(0)).get(0);
-                    ceitBot.sendMessageToAdmins((String) ((JSONObject) message.get("message")).get("text"));
+                    boolean send = true;
+
+                    JSONObject update = (JSONObject) ((JSONArray) server.getUpdates().get(0)).get(0);
+                    JSONObject message = (JSONObject) update.get("message");
+                    JSONArray entities = (JSONArray) message.get("entities");
+                    for (Object entity :
+                            entities) {
+                        if (((JSONObject) entity).get("type").equals("bot_command")) {
+                            send = false;
+                            if (((String) message.get("text")).equals("/sendmessage")) {
+                                JSONObject chat = (JSONObject) message.get("chat");
+                                Long id = (Long) chat.get("id");
+                                ceitBot.sendMessage(id, "باتشکر از پیام شما، پیام شما برای ما ارسال شد.");
+                            }
+                        }
+                    }
+                    if (send)
+                        ceitBot.sendMessageToAdmins((String) message.get("text"));
                     server.getUpdates().remove(0);
                 }
 

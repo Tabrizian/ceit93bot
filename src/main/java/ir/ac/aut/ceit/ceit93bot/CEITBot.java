@@ -27,7 +27,7 @@ public class CEITBot {
         //sendMessage(94393474, message);
     }
 
-    public void sendMessage(int chatId, String message) {
+    public void sendMessage(long chatId, String message) {
         if (message != null) {
             HttpGet getRequest = null;
             try {
