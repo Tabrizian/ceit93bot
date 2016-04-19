@@ -19,7 +19,7 @@ public class App {
                     JSONObject update = (JSONObject) ((JSONArray) server.getUpdates().get(0)).get(0);
                     JSONObject message = (JSONObject) update.get("message");
                     JSONArray entities = (JSONArray) message.get("entities");
-                    JSONObject user = (JSONObject) message.get("user");
+                    JSONObject user = (JSONObject) message.get("from");
                     if (entities != null)
                         for (Object entity :
                                 entities) {
@@ -33,13 +33,14 @@ public class App {
                             }
                         }
                     if (send) {
-                        if(user != null) {
+                        if (user != null) {
                             ceitBot.sendMessageToAdmins("From :" + (String) user.get("first_name"));
                             String lastName = (String) user.get("last_name");
                             if (lastName != null)
                                 ceitBot.sendMessageToAdmins((String) user.get("last_name"));
-                            ceitBot.sendMessageToAdmins((String) message.get("text"));
                         }
+                        ceitBot.sendMessageToAdmins((String) message.get("text"));
+
                     }
                     server.getUpdates().remove(0);
                 }
