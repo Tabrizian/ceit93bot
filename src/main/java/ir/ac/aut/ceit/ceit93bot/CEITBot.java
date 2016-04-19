@@ -24,7 +24,7 @@ public class CEITBot {
 
     public void sendMessageToAdmins(String message) {
         sendMessage(135707278, message);
-        sendMessage(94393474, message);
+        //sendMessage(94393474, message);
     }
 
     public void sendMessage(int chatId, String message) {
