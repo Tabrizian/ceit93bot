@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 public class App {
     public static void main(String[] args) {
         Server server = new Server();
-        CEITBot ceitBot = new CEITBot();
+        CeitBot ceitBot = new CeitBot();
         while (true) {
             try {
 
