@@ -13,11 +13,11 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class CEITBot {
+public class CeitBot {
 
     private HttpClient httpClient;
 
-    public CEITBot() {
+    public CeitBot() {
         this.httpClient = new DefaultHttpClient();
     }
 
