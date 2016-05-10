@@ -27,6 +27,7 @@ public class CeitBot {
         sendMessage(104233964, message); // Emran Batman
         sendMessage(64793874, message); // Ammar Gilani
         sendMessage(92811076, message); // AliAkbar Badri
+        sendMessage(98545242, message); // Amirhossesion Bavand
     }
 
     public void sendMessage(long chatId, String message) {
