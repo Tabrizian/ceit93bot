@@ -45,23 +45,25 @@ public class CeitBot {
     }
 
 
-    public void forwrardMessage(long toChatId, long fromChatId) {
+    public void forwrardMessage(long toChatId, long fromChatId, long messageId) {
         HttpGet getRequest;
         getRequest = new HttpGet(
                 "http://api.telegram.org/bot" + Config.getInstance().getHashId()
-                        + "/forwardMessage?" + "chat_id=" + toChatId + "&" + "from_chat_id=" + fromChatId);
+                        + "/forwardMessage?" + "chat_id=" + toChatId + "&" + "from_chat_id=" + fromChatId + "&"
+                        + "message_id=" + messageId);
         getRequest.addHeader("accept", "application/json");
 
         execRequest(getRequest);
 
     }
-    public void forwardMessageToAdmins(long fromChatId) {
-        forwrardMessage(135707278, fromChatId); //Iman Tabrizian
-        forwrardMessage(94393474, fromChatId); // Amir Salari
-        forwrardMessage(104233964, fromChatId); // Emran Batman
-        forwrardMessage(64793874, fromChatId); // Ammar Gilani
-        forwrardMessage(92811076, fromChatId); // AliAkbar Badri
-        forwrardMessage(98545242, fromChatId); // Amirhossesion Bavand
+
+    public void forwardMessageToAdmins(long fromChatId, long messageId) {
+        forwrardMessage(135707278, fromChatId, messageId); //Iman Tabrizian
+        forwrardMessage(94393474, fromChatId, messageId); // Amir Salari
+        forwrardMessage(104233964, fromChatId, messageId); // Emran Batman
+        forwrardMessage(64793874, fromChatId, messageId); // Ammar Gilani
+        forwrardMessage(92811076, fromChatId, messageId); // AliAkbar Badri
+        forwrardMessage(98545242, fromChatId, messageId); // Amirhossesion Bavand
     }
 
     private void execRequest(HttpGet httpGet) {

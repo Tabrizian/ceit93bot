@@ -33,7 +33,8 @@ public class App {
                         }
                     if (send) {
                         long fromChatId = (long) ((JSONObject) message.get("chat")).get("id");
-                        ceitBot.forwardMessageToAdmins(fromChatId);
+                        long messageId = (long) (message.get("message_id"));
+                        ceitBot.forwardMessageToAdmins(fromChatId, messageId);
 
                     }
                     server.getUpdates().remove(0);
