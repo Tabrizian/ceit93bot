@@ -4,9 +4,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.DefaultedHttpParams;
-import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,22 +39,48 @@ public class CeitBot {
             }
             getRequest.addHeader("accept", "application/json");
 
-            try {
-                HttpResponse response = httpClient.execute(getRequest);
+            execRequest(getRequest);
 
-                if (response.getStatusLine().getStatusCode() != 200) {
-                    throw new RuntimeException(
-                            "Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
-                }
-
-                InputStream inputStream = response.getEntity().getContent();
-                while (inputStream.read() > 0) ;
-
-                inputStream.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+    }
+
+
+    public void forwrardMessage(long toChatId, long fromChatId) {
+        HttpGet getRequest;
+        getRequest = new HttpGet(
+                "http://api.telegram.org/bot" + Config.getInstance().getHashId()
+                        + "/forwardMessage?" + "chat_id=" + toChatId + "&" + "from_chat_id=" + fromChatId);
+        getRequest.addHeader("accept", "application/json");
+
+        execRequest(getRequest);
+
+    }
+    public void forwardMessageToAdmins(long fromChatId) {
+        forwrardMessage(135707278, fromChatId); //Iman Tabrizian
+        forwrardMessage(94393474, fromChatId); // Amir Salari
+        forwrardMessage(104233964, fromChatId); // Emran Batman
+        forwrardMessage(64793874, fromChatId); // Ammar Gilani
+        forwrardMessage(92811076, fromChatId); // AliAkbar Badri
+        forwrardMessage(98545242, fromChatId); // Amirhossesion Bavand
+    }
+
+    private void execRequest(HttpGet httpGet) {
+        try {
+            HttpResponse response = httpClient.execute(httpGet);
+
+            if (response.getStatusLine().getStatusCode() != 200) {
+                throw new RuntimeException(
+                        "Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
+            }
+
+            InputStream inputStream = response.getEntity().getContent();
+            while (inputStream.read() > 0) ;
+
+            inputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
