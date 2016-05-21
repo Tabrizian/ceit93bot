@@ -4,11 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-/**
- * Hello world!
- */
 public class App {
     public static void main(String[] args) {
         Server server = new Server();
