@@ -1,3 +1,6 @@
+import org.telegram.telegrambots.api.methods.ForwardMessage;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
+
 /**
  * Created by iman on 6/14/16.
  */
@@ -17,4 +20,6 @@ public class CeitBot {
         return instance;
 
     }
+
+
 }

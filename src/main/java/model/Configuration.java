@@ -5,4 +5,5 @@ package model;
  */
 public class Configuration {
     public String hashId;
+    public String username;
 }
