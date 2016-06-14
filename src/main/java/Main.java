@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import model.Response;
 
 import java.io.IOException;
 
