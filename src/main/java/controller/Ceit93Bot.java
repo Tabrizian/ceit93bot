@@ -1,22 +1,23 @@
 package controller;
 
-import model.Configuration;
 import org.telegram.telegrambots.TelegramApiException;
-import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.methods.ForwardMessage;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.bots.TelegramWebhookBot;
 
 /**
  * Created by iman on 6/14/16.
  */
-public class Ceit93Bot extends TelegramLongPollingBot {
+public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
 
+    private String[] filters = {"/start", "/sendmessage"};
 
     public void onUpdateReceived(Update update) {
-        forwardMessageToAdmins(String.valueOf(update.getMessage().getChatId()), update.getMessage().getMessageId());
+        if(!filter(update.getMessage())) {
+            forwardMessageToAdmins(String.valueOf(update.getMessage().getChatId()), update.getMessage().getMessageId());
+        }
     }
 
     public String getBotUsername() {
@@ -67,5 +68,13 @@ public class Ceit93Bot extends TelegramLongPollingBot {
         forwrardMessage("64793874", fromChatId, messageId); // Ammar Gilani
         forwrardMessage("92811076", fromChatId, messageId); // AliAkbar Badri
         forwrardMessage("98545242", fromChatId, messageId); // Amirhossesion Bavand
+    }
+
+    public boolean filter(Message message) {
+        if(message.isCommand()){
+            return true;
+        }
+
+        return false;
     }
 }
