@@ -12,7 +12,7 @@ import org.telegram.telegrambots.bots.TelegramWebhookBot;
 /**
  * Created by iman on 6/14/16.
  */
-public class Amazing extends TelegramLongPollingBot {
+public class Ceit93Bot extends TelegramLongPollingBot {
 
 
     public void onUpdateReceived(Update update) {

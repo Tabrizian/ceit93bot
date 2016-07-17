@@ -1,8 +1,4 @@
-import com.google.gson.Gson;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import controller.Amazing;
-import model.Response;
+import controller.Ceit93Bot;
 import org.telegram.telegrambots.TelegramApiException;
 import org.telegram.telegrambots.TelegramBotsApi;
 
@@ -15,6 +11,6 @@ public class Main {
     public static void main(String[] args) throws IOException, TelegramApiException {
 
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-        telegramBotsApi.registerBot(new Amazing());
+        telegramBotsApi.registerBot(new Ceit93Bot());
     }
 }
