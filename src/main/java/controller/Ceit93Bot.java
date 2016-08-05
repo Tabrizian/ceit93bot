@@ -1,5 +1,6 @@
 package controller;
 
+import helper.MessageHelper;
 import org.telegram.telegrambots.TelegramApiException;
 import org.telegram.telegrambots.api.methods.ForwardMessage;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -12,11 +13,11 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
  */
 public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
 
-    private String[] filters = {"/start", "/sendmessage"};
-
     public void onUpdateReceived(Update update) {
-        if(!filter(update.getMessage())) {
-            forwardMessageToAdmins(String.valueOf(update.getMessage().getChatId()), update.getMessage().getMessageId());
+        if (!filter(update.getMessage())) {
+            if (!MessageHelper.isStudyGroupMessage(update.getMessage()))
+                forwardMessageToAdmins(String.valueOf(update.getMessage().getChatId()), update.getMessage().getMessageId());
+
         }
     }
 
@@ -71,7 +72,7 @@ public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
     }
 
     public boolean filter(Message message) {
-        if(message.isCommand()){
+        if (message.isCommand()) {
             return true;
         }
 
