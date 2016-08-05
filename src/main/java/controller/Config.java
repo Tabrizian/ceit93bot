@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 
 public class Config {
 
-    public static Config instance;
+    private static Config instance;
     private Configuration configuration;
 
     private Config() {
