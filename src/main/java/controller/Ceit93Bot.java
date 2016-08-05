@@ -15,9 +15,11 @@ public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
 
     public void onUpdateReceived(Update update) {
         if (!filter(update.getMessage())) {
-            if (!MessageHelper.isStudyGroupMessage(update.getMessage()))
+            if (!MessageHelper.isStudyGroupMessageQuestion(update.getMessage()))
                 forwardMessageToAdmins(String.valueOf(update.getMessage().getChatId()), update.getMessage().getMessageId());
+            else {
 
+            }
         }
     }
 
