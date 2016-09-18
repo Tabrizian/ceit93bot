@@ -2,6 +2,8 @@ FROM ubuntu
 Maintainer Iman Tabrizian <tabrizian@outlook.com>
 
 # Install Packages
+RUN apt-get update
+RUN apt-get install software-properties-common
 RUN add-apt-repository ppa:webupd8team/java
 RUN add-apt-repository ppa:cwchien/gradle
 RUN apt-get update
