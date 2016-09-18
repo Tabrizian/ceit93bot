@@ -9,3 +9,6 @@ RUN add-apt-repository ppa:cwchien/gradle
 RUN apt-get update
 RUN apt-get install -y oracle-java8-installer gradle-2.1 git
 
+# Entry Point
+ENTRYPOINT ["gradle run"]
+
