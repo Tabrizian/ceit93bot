@@ -5,8 +5,6 @@ Maintainer Iman Tabrizian <tabrizian@outlook.com>
 WORKDIR /root/ceit93bot
 COPY . .
 
-ENTRYPOINT ["gradle", "run"]
-
 # Entry Point
-ENTRYPOINT ["gradle run"]
+ENTRYPOINT ["gradle", "run"]
 
