@@ -35,7 +35,6 @@ public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
         sendMessage("135707278", message); //Iman Tabrizian
         sendMessage("94393474", message); // Amir Salari
         sendMessage("104233964", message); // Emran Batman
-        sendMessage("64793874", message); // Ammar Gilani
         sendMessage("92811076", message); // AliAkbar Badri
         sendMessage("98545242", message); // Amirhossesion Bavand
     }
