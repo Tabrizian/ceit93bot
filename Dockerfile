@@ -7,3 +7,6 @@ COPY . .
 
 ENTRYPOINT ["gradle", "run"]
 
+# Entry Point
+ENTRYPOINT ["gradle run"]
+
