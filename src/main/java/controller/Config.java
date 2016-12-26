@@ -3,7 +3,6 @@ package controller;
 import com.google.gson.Gson;
 import model.Configuration;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -17,7 +16,7 @@ public class Config {
 
     private Config() {
 
-        InputStreamReader inputStreamReader = new InputStreamReader(getClass().getResourceAsStream("/user.conf"));
+        InputStreamReader inputStreamReader = new InputStreamReader(getClass().getResourceAsStream("/user.json"));
 
         Gson gson = new Gson();
         configuration = gson.fromJson(inputStreamReader, Configuration.class);

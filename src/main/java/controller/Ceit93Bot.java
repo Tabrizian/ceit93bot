@@ -1,6 +1,7 @@
 package controller;
 
 import helper.MessageHelper;
+import org.apache.commons.logging.Log;
 import org.telegram.telegrambots.TelegramApiException;
 import org.telegram.telegrambots.api.methods.ForwardMessage;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -14,13 +15,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
 
     public void onUpdateReceived(Update update) {
-        if (!filter(update.getMessage())) {
-            if (!MessageHelper.isStudyGroupMessageQuestion(update.getMessage()))
-                forwardMessageToAdmins(String.valueOf(update.getMessage().getChatId()), update.getMessage().getMessageId());
-            else {
-
-            }
-        }
+        update.getMessage();
+        System.out.println("Hello");
+        forwardMessageToAdmins(update.getMessage());
     }
 
     public String getBotUsername() {
@@ -51,11 +48,11 @@ public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
     }
 
 
-    public void forwrardMessage(String toChatId, String fromChatId, int messageId) {
+    public void forwrardMessage(Message message, String toChatId) {
         ForwardMessage forwardMessage = new ForwardMessage();
-        forwardMessage.setFromChatId(fromChatId);
+        forwardMessage.setFromChatId(String.valueOf(message.getChatId()));
         forwardMessage.setChatId(toChatId);
-        forwardMessage.setMessageId(messageId);
+        forwardMessage.setMessageId(message.getMessageId());
         try {
             forwardMessage(forwardMessage);
         } catch (TelegramApiException e) {
@@ -63,13 +60,13 @@ public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
         }
     }
 
-    public void forwardMessageToAdmins(String fromChatId, int messageId) {
-        forwrardMessage("135707278", fromChatId, messageId); //Iman Tabrizian
-        forwrardMessage("94393474", fromChatId, messageId); // Amir Salari
-        forwrardMessage("104233964", fromChatId, messageId); // Emran Batman
-        forwrardMessage("64793874", fromChatId, messageId); // Ammar Gilani
-        forwrardMessage("92811076", fromChatId, messageId); // AliAkbar Badri
-        forwrardMessage("98545242", fromChatId, messageId); // Amirhossesion Bavand
+    public void forwardMessageToAdmins(Message message) {
+        forwrardMessage(message, "135707278"); //Iman Tabrizian
+        forwrardMessage(message, "94393474"); // Amir Salari
+        forwrardMessage(message, "104233964"); // Emran Batman
+        forwrardMessage(message, "64793874"); // Ammar Gilani
+        forwrardMessage(message, "92811076"); // AliAkbar Badri
+        forwrardMessage(message, "98545242"); // Amirhossesion Bavand
     }
 
     public boolean filter(Message message) {
