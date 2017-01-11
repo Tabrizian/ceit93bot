@@ -15,9 +15,13 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
 
     public void onUpdateReceived(Update update) {
-        update.getMessage();
-        System.out.println("Hello");
-        forwardMessageToAdmins(update.getMessage());
+        if(update.getMessage().isReply()) {
+            Integer id = update.getMessage().getReplyToMessage().getForwardFrom().getId();
+            sendMessage(String.valueOf(id), update.getMessage());
+        } else {
+            forwardMessageToAdmins(update.getMessage());
+        }
+
     }
 
     public String getBotUsername() {
@@ -28,7 +32,7 @@ public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
         return Config.getInstance().getConfiguration().hashId;
     }
 
-    public void sendMessageToAdmins(String message) {
+    public void sendMessageToAdmins(Message message) {
         sendMessage("135707278", message); //Iman Tabrizian
         sendMessage("94393474", message); // Amir Salari
         sendMessage("104233964", message); // Emran Batman
@@ -36,12 +40,9 @@ public class Ceit93Bot extends TelegramLongPollingBot implements Filterable {
         sendMessage("98545242", message); // Amirhossesion Bavand
     }
 
-    public void sendMessage(String chatId, String message) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setText(message);
-        sendMessage.setChatId(chatId);
+    public void sendMessage(String chatId, Message message) {
         try {
-            sendMessage(sendMessage);
+            sendMessage(new SendMessage().setText(message.getText()).setChatId(chatId));
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
