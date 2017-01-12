@@ -16,3 +16,4 @@ docker run -d tabrizian/ceit93bot
 - [x] Add reply
 - [ ] Add question asking support
 - [x] Add support for file
+- [ ] Enabling sending messages to channel from bot
