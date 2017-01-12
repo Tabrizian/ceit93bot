@@ -13,6 +13,6 @@ docker build . -t tabrizian/ceit93bot
 docker run -d tabrizian/ceit93bot
 ```
 ## TODO
-- [ ] Add reply
+- [x] Add reply
 - [ ] Add question asking support
 - [x] Add support for file
